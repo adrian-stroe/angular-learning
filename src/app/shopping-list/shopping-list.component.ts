@@ -22,7 +22,9 @@ export class ShoppingListComponent implements OnInit {
   }
 
   onIngredientAdded(ingredient: Ingredient){
-    this.ingredients.push(ingredient)
+    if (ingredient.name != ''  && ingredient.amount > 0 ){
+      this.ingredients.push(ingredient)
+    }
   }
 
 
