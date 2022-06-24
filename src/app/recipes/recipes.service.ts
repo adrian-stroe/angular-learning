@@ -38,4 +38,9 @@ export class RecipesService {
     this.shoppingService.addIngredients(ingredients)
   }
 
+  getRecipe(index: number){
+    return this.recipes.slice()[index]
+  }
+
+
 }
