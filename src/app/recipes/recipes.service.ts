@@ -12,9 +12,7 @@ export class RecipesService {
 
   recipesChanged = new Subject<Recipe[]>()
 
-
-
-  private recipes: Recipe[]=[
+  /* private recipes: Recipe[]=[
     new Recipe('Diavolo Pizza',
      'Wide and tasty pizza',
      'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpizza-piccolo.at%2Fshop%2Fmedia%2Fimages%2Fpopup%2Fdiavolo_pizza.jpg&f=1&nofb=1',
@@ -29,10 +27,17 @@ export class RecipesService {
       new Ingredient('Noodles', 2),
       new Ingredient('Eggs', 2)
     ])
-  ]
+  ] */
+  private recipes: Recipe [] = []
 
 
   constructor(private shoppingService: ShoppingListService){}
+
+  setRecipes(recipes: Recipe[]){
+    this.recipes = recipes
+    this.recipesChanged.next(this.recipes.slice())
+  }
+
 
   getRecipes(){
     return this.recipes.slice() //return copy
@@ -61,6 +66,8 @@ export class RecipesService {
     this.recipes.splice(index, 1);
     this.recipesChanged.next(this.recipes.slice())
   }
+
+
 
 
 }
