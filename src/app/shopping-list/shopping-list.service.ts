@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class ShoppingListService{
   ingredientsChanged = new Subject<Ingredient[]>()
+  startedEditing = new Subject<number>()
 
   private ingredients: Ingredient[] = [
     new Ingredient('Carrot', 2),
@@ -29,6 +30,21 @@ export class ShoppingListService{
       this.addIngredient(ingredient);
     } */ //emits too many events
     this.ingredients.push(...ingredients)
+    this.ingredientsChanged.next(this.ingredients.slice())
+  }
+
+  getIngredient(index: number){
+    return this.ingredients[index]
+  }
+
+  updateIngredient(ingredientIndex: number, newIngredient: Ingredient){
+    this.ingredients[ingredientIndex] = newIngredient;
+    this.ingredientsChanged.next(this.ingredients.slice())
+  }
+
+
+  deleteIngredient(index: number){
+    this.ingredients.splice(index, 1)
     this.ingredientsChanged.next(this.ingredients.slice())
   }
 

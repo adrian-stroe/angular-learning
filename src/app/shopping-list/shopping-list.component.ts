@@ -11,22 +11,26 @@ import { Subscription } from 'rxjs';
 export class ShoppingListComponent implements OnInit, OnDestroy {
 
   ingredients: Ingredient[] = [];
-  private igChangeSub!: Subscription;
+  private subscription!: Subscription;
 
   constructor(private shoppingService: ShoppingListService) {
   }
 
   ngOnInit(): void {
     this.ingredients = this.shoppingService.getIngredients()
-    this.igChangeSub = this.shoppingService.ingredientsChanged.subscribe(
+    this.subscription = this.shoppingService.ingredientsChanged.subscribe(
       (ingredients: Ingredient[]) =>{
         this.ingredients = ingredients
       }
     )
   }
 
+  onEditItem(index: number){
+    this.shoppingService.startedEditing.next(index)
+  }
+
   ngOnDestroy(): void {
-    this.igChangeSub.unsubscribe()
+    this.subscription.unsubscribe()
   }
 
 }
